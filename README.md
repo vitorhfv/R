@@ -1,2 +1,2 @@
 # R
-Stuff from R course
+Programming with R.
