@@ -155,3 +155,27 @@ imdb4 <- imdb %>%
   select(titulo, ano, receita)
 
 imdb_receita
+##############################
+
+
+ceni2
+
+
+install.packages("rtweet")
+library(rtweet)
+library(lubridate)
+library(rtweet)
+
+pintou_clima<-
+  rtweet::search_tweets(q="PINTOU UM CLIMA voltei perguntei Posso entrar na sua casa",
+                        n=100000,
+                        include_rts = FALSE)
+pintou_clima
+
+auth_setup_default()
+
+pintou_clima %>%
+  ggplot(aes(x= created_at, y= favorite_count)) +
+  geom_line()
+
+pintou_clima %>%
