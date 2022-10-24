@@ -6,15 +6,15 @@ imdb4 <- imdb %>%
 
 
 ano <- imdb4 %>%
-  pull (ano) %>%
+  pull(ano) %>%
   head(50)
 
 receita <- imdb4 %>%
-  pull (receita) %>%
+  pull(receita) %>%
   head(50)
 
 
-imdb_rec_50$rec_def_2016 <- adjust_for_inflation(receita, ano, 'US', to_date = 2016)
+imdb_rec_50$rec_def_2016 <- adjust_for_inflation(receita, ano, "US", to_date = 2016)
 
 imdb_rec_50
 
@@ -28,55 +28,48 @@ imdb_rec_50 <- imdb_receita %>%
   head(50)
 
 
-imdb_rec_50$rec_def_2020 <- adjust_for_inflation(receita, ano, 'US', to_date = 2020)
+imdb_rec_50$rec_def_2020 <- adjust_for_inflation(receita, ano, "US", to_date = 2020)
 imdb_rec_50
 
 
 imdb_receita %>%
-  ggplot()+
+  ggplot() +
 
+
+
+
+
+  imdb %>%
+  geom_point(mapping = aes(x = orcamento, y = receita), color = "blue")
 
 
 
 
 imdb %>%
-  geom_point(mapping = aes (x = orcamento, y = receita), color='blue')
-
-
-
-
-imdb %>%
-  filter(diretor == 'Clint Eastwood') %>%
+  filter(diretor == "Clint Eastwood") %>%
   group_by(ano) %>%
-  summarise(nota_media = mean (nota_imdb, na.rm = TRUE)) %>%
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>%
   mutate(nota_media = round(nota_media, 1)) %>%
   ggplot(aes(x = ano, y = nota_media)) +
   geom_line() +
-  geom_label (aes(label = nota_media))+
-  labs(title = 'Gráfico: Nota média de cineasta por década')+
-  theme(text=element_text(family="Arial"))
+  geom_label(aes(label = nota_media)) +
+  labs(title = "Gráfico: Nota média de cineasta por década") +
+  theme(text = element_text(family = "Arial"))
 
 
 
-ggsave('woody.png', plot= wooda, device=png, width = 8.5, height = 5.5, units = "in", dpi = 400)
-
-
-
-
+ggsave("woody.png", plot = wooda, device = png, width = 8.5, height = 5.5, units = "in", dpi = 400)
 
 
 
 
 
 
-
-
-
-install.packages('plotly')
+install.packages("plotly")
 library(plotly)
 #################################
 #
-install.packages('ggthemes')
+install.packages("ggthemes")
 library(ggthemes)
 ggthemes::theme_solid()
 
@@ -90,7 +83,45 @@ library(ggplot2)
 ############################################
 imdb %>%
   drop_na(receita) %>%
-  head (10)
+  head(10)
 
 imdb
-imdb<- readr::read_rds("C:\\Users\\PC\\Desktop\\Trabalhos\\imdb.rds")
+imdb <- readr::read_rds("C:\\Users\\PC\\Desktop\\Trabalhos\\imdb.rds")
+imdb <- read.csv('data/imdb111.csv')
+
+
+install.packages("styler")
+
+library(styler)
+
+imdb_jimmy <- imdb %>%
+  filter (str_detect(elenco, "Cary Grant"),
+          between(ano, 1940, 1946),
+          (nota_imdb < 7.0)
+          ) %>%
+  select (titulo, ano, nota_imdb) %>%
+  arrange((ano))
+
+
+imdb_jimmy
+
+imdb_jimmy %>%
+  ggplot() +
+  geom_line(aes(x = ano, y = nota_imdb))
+
+###############
+library("basedosdados")
+library(dplyr)
+
+# Defina o seu projeto no Google Cloud
+library(basedosdados)
+set_billing_id("bustling-walker-349821")
+
+query <- bdplyr("br_tse_eleicoes.resultados_partido_municipio")
+
+df <- bd_collect(query)
+
+library(bdplyr)
+install.packages('bdplyr')
+
+query <- bdplyr("br_bcb_sicor.dicionario")

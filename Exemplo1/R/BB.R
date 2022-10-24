@@ -3,7 +3,7 @@ a
 install.packages("tidyverse")
 dados<-read.csv("dados/a.csv")
 imdb <- read.csv("dados/imdb.csv")
-imdb2 <- read.csv2("dados/imdb2.csv")
+imdb2 <- read.csv2("data/imdb2.csv")
 
 write.csv(imdb, "dados/dados10.csv", sep=',')
 write.csv2(imdb2, 'dados/imdbbb10.csv')
@@ -26,6 +26,9 @@ Cobbd
 
 install.packages("writexl")
 
+imdb <- imdb2
+
+library(tidyverse)
 library(magrittr)
 x %>% f(y)
 
@@ -318,3 +321,54 @@ imdb_lucro
 personagem_mais_baixo <- dplyr::starwars %>%
   arrange(desc(height)) %>%
   slice(1)
+
+imdb
+
+##### REGRESSAO
+Cobbd %>%
+  lm(log(Produto) ~ log(trabalho) + log(capital), data = .) %>%
+  summary ()
+
+imdb %>%
+  lm(log(receita_eua) ~ duracao, data =.) %>%
+  summary ()
+
+
+l
+log(8.162184)
+0.062661*100
+O aumento unitário de x aumenta y em %
+
+O aumento de um minuto na duração de um filme
+leva a aumento de 6,2% na bilheteria de um filme
+
+
+imdb_total <- read.csv('data/imdb111.csv')
+
+imdb
+
+
+filter(across(c(type, company), ~ !is.na(.)))
+
+
+
+
+imdb2 <- imdb %>%
+  filter (if_any(everything(), ~str_detect(.,'^Nicolas Cage'))) %>%
+  select (titulo, ano, nota_imdb, ator_1, ator_2, ator_3)
+
+
+
+
+imdb_nota_ator <- imdb %>%
+  group_by(ator_1) %>%
+  summarise(nota_soma = mean(nota_imdb/10),
+            filmes_db = n()) %>%
+  filter(filmes_db > 10) %>%
+  arrange(desc(nota_soma)) %>%
+  slice(1:10)
+
+imdb_nota_ator
+
+imdb_leo <- imdb_total %>%
+  filter (str_detect=='Leonardo DiCaprio')
