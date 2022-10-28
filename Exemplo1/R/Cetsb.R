@@ -108,8 +108,8 @@ ggplot(nat_paul, aes(x= ano, y= nota_imdb))+
 
 nba <- read.csv("http://datasets.flowingdata.com/ppg2008.csv", sep = ",")
 
-nbaplot <- ggplot(nba, aes(x= MIN, y = PTS)) +
-  geom_point(color = "blue", size = 3)
+ggplot(nba, aes(x= MIN, y = PTS)) +
+  geom_point(stat = 'identity', color = "blue", size = 3)
 
 ### geom_label_repel
 nbaplot +
@@ -120,14 +120,25 @@ nbaplot +
 
 
 
+nbaa %>%
+  ggplot (aes(x = reorder(Name, -PTS), y = PTS))+
+  labs (x = 'Atletas da NBA', y = 'pontos por jogo')+
+  geom_bar(stat = 'identity')+
+  theme_light(base_size = 12)
+
+
+
+nbaa <- nba %>%
+  head(6)
 
 
 imdb_top10$elenco[3]
 
 
 
+library (tidyverse)
 
-
+imdb2
 
 
 
@@ -202,3 +213,79 @@ summarise(media_lucro = mean(lucro),
   summarise(lucro_medio = mean(lucro, na.rm = TRUE)) %>%
 
 
+
+imdb2
+
+
+#----------
+
+imdb3<-imdb2 %>%
+  select (titulo, ano, elenco, nota_imdb) %>%
+  mutate (imdb_bom = nota_imdb > 6.5,
+          imdb_baixo = nota_imdb < 6.5)
+#
+imdb3 %>%
+  group_by(elenco) %>%
+  summarise(media_imdb = mean (nota_imdb),
+            filmes_db = n()) %>%
+  filter (filmes_db > 1) %>%
+  arrange(desc(media_imdb))
+
+jim<-imdb3 %>%
+  filter (elenco == 'James Stewart') %>%
+  arrange(ano)
+
+gra <- imdb3 %>%
+  filter (elenco == 'Cary Grant') %>%
+  arrange(ano)
+
+
+gra_jim <- imdb3 %>%
+  dplyr::filter(elenco %in% c('James Stewart', 'Cary Grant')) %>%
+  arrange()
+
+
+
+
+
+
+imdb2 %>%
+  select (titulo, ano, elenco, nota_imdb) %>%
+  filter (elenco == c('James Stewart', 'Cary Grant')) %>%
+  arrange(ano)
+
+
+nbaa %>%
+  ggplot (aes(x = reorder(Name, -PTS), y = PTS))+
+  labs (x = 'Atletas da NBA', y = 'pontos por jogo')+
+  geom_bar(stat = 'identity')+
+  theme_light(base_size = 12)
+
+
+imdb4<-imdb3 %>%
+  filter (elenco == 'James Stewart')
+
+
+gg <- ggplot(mpg, aes(class))
+
+gg <- ggplot (gra_jim, aes(elenco))
+
+gg
+
+
+gg +
+  geom_bar(aes(fill = IMDB))+
+  labs (x='atores', y ='filmes', title = 'Gráfico 1: Estrelas de Hollywood e carreira')+
+  scale_fill_manual(values = c('578AF7','pink'),
+                    labels = c('alto', 'baixo'))
+
+
+
+g + labs (color='a')
+
+
+plot +labs (colours = 'a')
+
+
+p <- ggplot(mtcars, aes(mpg, wt, colour = cyl)) + geom_point()
+p + labs(colour = "a")
