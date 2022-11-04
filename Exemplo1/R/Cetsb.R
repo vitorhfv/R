@@ -209,7 +209,8 @@ summarise(media_lucro = mean(lucro),
   filter(filmes_db > 2) %>%
 
 
-  group_by(generos) %>%
+  group_by(
+    os) %>%
   summarise(lucro_medio = mean(lucro, na.rm = TRUE)) %>%
 
 

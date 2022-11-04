@@ -2,6 +2,8 @@ usethis::create_project ('C:\\Users\\PC\\Desktop\\Trabalhos\\Programacao_R_2_Ini
 here::dr_here()
 
 ## Test 1
+library(tidyverse)
+
 
 500/30
 ############################################
@@ -58,7 +60,7 @@ loadfonts(device="win")       #Register fonts for Windows bitmap output
 fonts()
 
 ##############################################
-library(priceR)
+library(priceR) d
 
 adjust_for_inflation(100, 2005, country, to_date = 2017,
                      inflation_dataframe = inflation_dataframe,
